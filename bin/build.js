@@ -79,7 +79,7 @@ var comments = {
   '\n// For all details and documentation:' +
   '\n// http://pouchdb.com\n',
 
-  'mapreduce.noeval': '// PouchDB no-eval map/reduce plugin'
+  'mapreduce': '// PouchDB no-eval map/reduce plugin\n'
 };
 
 function writeFile(filename, contents) {
