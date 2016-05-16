@@ -91,6 +91,9 @@
     "webpack": "1.12.14"
   },
   "scripts": {
+    "build-mapreduce": "mkdirp dist && npm run browserify-mapreduce && npm run min-mapreduce",
+    "browserify-mapreduce": "browserify src/mapreduce/index.js | ./bin/es3ify.js | derequire > dist/pouchdb.mapreduce.noeval.js",
+    "min-mapreduce": "uglifyjs dist/pouchdb.mapreduce.noeval.js -mc > dist/pouchdb.mapreduce.noeval.min.js",
     "build": "node ./bin/build.js",
     "build-node": "bash bin/build-node.sh",
     "build-as-modular-es5": "bash bin/build-as-modular-es5.sh",

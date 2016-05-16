@@ -28,7 +28,7 @@ var external = Object.keys(pkg.dependencies).concat([
  'fs', 'crypto', 'events', 'path', 'pouchdb'
 ]);
 
-var plugins = ['fruitdown', 'localstorage', 'memory'];
+var plugins = ['fruitdown', 'localstorage', 'memory', 'mapreduce'];
 var extras = {
   'src/deps/promise.js': 'promise.js',
   'src/replicate/checkpointer.js': 'checkpointer.js',
@@ -77,7 +77,9 @@ var comments = {
   '\n// PouchDB may be freely distributed under the Apache license, ' +
   'version 2.0.' +
   '\n// For all details and documentation:' +
-  '\n// http://pouchdb.com\n'
+  '\n// http://pouchdb.com\n',
+
+  'mapreduce.noeval': '// PouchDB no-eval map/reduce plugin'
 };
 
 function writeFile(filename, contents) {
@@ -190,7 +192,11 @@ function cleanup() {
 function buildPluginsForBrowserify() {
   return mkdirp('lib/extras').then(function() {
     return Promise.all(plugins.map(function (plugin) {
-      return doRollup('src_browser/plugins/' + plugin + '/index.js',
+      var src = 'src_browser/plugins/' + plugin + '/index.js';
+      if (plugin === 'mapreduce') {
+        src = 'src_browser/mapreduce/index.js';
+      }
+      return doRollup(src,
                       'lib/extras/' + plugin + '.js');
     }));
   });
