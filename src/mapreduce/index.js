@@ -256,8 +256,10 @@ function checkInjectedFunctions(injectedFun, viewFun) {
     }
     var normalizedInjectedFun =
       injectedFun[name].toString()
-        .replace(/^function [^\(]*\(/, 'function(')
-        .replace(/,\s*emit\s*\)\s*\{/, '){');
+        .replace(/\s+/g, ' ')
+        .replace(/^function[^\(]*\(/, 'function(')
+        .replace(/,\s?emit\s?\)\s?\{/, '){');
+
     var normalizedViewFun = viewFun[name];//.replace(/\s+/g, '');
     if (normalizedInjectedFun !== normalizedViewFun) {
       throw new QueryParseError('Injected ' + name + ' function does not match the stored one in the view.' +
